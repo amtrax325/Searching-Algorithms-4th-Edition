@@ -1,20 +1,23 @@
 package com.binarySearch;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
 
-//TODO: implement dynamic-array mechanism
+
 public class BinarySearchST<Key extends  Comparable<Key>, Value>  {
 
     private  Key [] keys;
     private Value [] vals;
     private int N;
-
+    private int arrayCapacity;
     public BinarySearchST(int capacity)
     {
         keys = (Key[]) new Comparable [capacity];
         vals = (Value[]) new Comparable [capacity];
+        arrayCapacity = capacity;
     }
     public int size()
     {return N;}
@@ -29,8 +32,10 @@ public class BinarySearchST<Key extends  Comparable<Key>, Value>  {
 
   public void put(Key key, Value val)
   {
-      int i = rank(key);
+      int i = rank(key,0,N-1);
       if (i < N && keys[i].compareTo(key) == 0) {vals[i] = val; return;}
+      if(N+1  == arrayCapacity)
+          changeSize();
       for (int j = N; j > i; j--)
       {
           keys[j] = keys[j-1];
@@ -38,7 +43,7 @@ public class BinarySearchST<Key extends  Comparable<Key>, Value>  {
       }
       keys[i] = key; vals[i] = val;
       N++;
-      //TODO: implement dynamic array-size-change
+
   }
 
 public Key min()
@@ -61,6 +66,21 @@ public Key floor(Key key)
   public void delete(Key key){
         //TODO: implement delete method
   }
+  //recursion version of rank
+  private int rank(Key key, int l, int h)
+   {
+       int lo = l, hi = h;
+       if (lo > hi)
+           return lo;
+       int mid = lo + (hi - lo) / 2;
+       int cmp = key.compareTo(keys[mid]);
+       if (cmp < 0) return rank(key,lo,mid-1);
+       if (cmp > 0) return rank(key,mid+1,hi);
+       else return mid;
+   }
+
+
+
     private int rank(Key key) {
         int lo = 0, hi = N-1;
 
@@ -69,7 +89,7 @@ public Key floor(Key key)
             int mid = lo + (hi - lo) / 2;
             int cmp = key.compareTo(keys[mid]);
             if (cmp < 0) hi = mid  - 1;
-            if (cmp > 0) lo = mid  + 1;
+            else if (cmp > 0) lo = mid  + 1;
             else return mid;
         }
         return lo;
@@ -77,7 +97,7 @@ public Key floor(Key key)
 
 public Iterable<Key> keys(Key lo, Key hi)
 {
-    Queue<Key> q = new PriorityQueue<>();
+    List<Key> q = new LinkedList<>();
     for (int i = rank(lo); i < rank(hi); i++)
         q.add(keys[i]);
         if (contains(hi))
@@ -86,7 +106,7 @@ public Iterable<Key> keys(Key lo, Key hi)
 }
 public Iterable<Key> keys()
 {
-    Queue<Key> q = new PriorityQueue<>();
+    List<Key> q = new LinkedList<>();
     for (int i = rank(keys[0]); i < rank(keys[N-1]); i++)
         q.add(keys[i]);
     if (contains(keys[N-1]))
@@ -100,7 +120,25 @@ public Iterable<Key> keys()
         if(get(key) == null) return false;
         return true;
     }
+
+    private void changeSize()
+    {
+        Key [] tempKey = keys;
+        Value [] tempValue = vals;
+
+        keys = (Key[]) new Comparable [arrayCapacity*2];
+        vals = (Value[]) new Comparable [arrayCapacity*2];
+
+        for (int i = 0; i < arrayCapacity; i++)
+        {
+            keys[i] = tempKey[i];
+            vals[i] = tempValue[i];
+        }
+        arrayCapacity*=2;
+    }
     private boolean isEmpty() {
         return N == 0;
     }
+
+
 }
