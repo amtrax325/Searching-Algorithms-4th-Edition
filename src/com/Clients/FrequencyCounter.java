@@ -1,6 +1,6 @@
 package com.Clients;
 
-import com.binarySearch.BinarySearchST;
+import com.search.BinarySearchST;
 
 import java.io.File;
 import java.io.FileNotFoundException;

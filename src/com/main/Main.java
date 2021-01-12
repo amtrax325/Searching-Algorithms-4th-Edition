@@ -1,17 +1,14 @@
 package com.main;
 
-import com.binarySearch.BinarySearchST;
-import exercises.ArrayST;
-import exercises.NotesClient;
+import com.search.SequentialSearchST;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws FileNotFoundException {
+
+        SequentialSearchST<String,Integer> x = new SequentialSearchST<>();
 
 
     }

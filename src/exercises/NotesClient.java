@@ -1,6 +1,6 @@
 package exercises;
 
-import com.binarySearch.BinarySearchST;
+import com.search.BinarySearchST;
 
 import java.util.Scanner;
 
