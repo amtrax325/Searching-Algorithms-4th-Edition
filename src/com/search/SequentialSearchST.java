@@ -14,6 +14,7 @@ public class SequentialSearchST<Key, Value>
         Key key;
         Value val;
         Node next;
+        Node before;
         public Node(Key key, Value val, Node next)
         {
             this.key = key;
@@ -31,6 +32,23 @@ public class SequentialSearchST<Key, Value>
 
     public void delete (Key key)
     {
+    if(key.equals(first.key))
+    {
+        first  = first.next;
+        size--;
+        return;
+    }
+    Node previous = first;
+    for(Node x = first.next; x != null; x = x.next)
+    {
+        if (key.equals(x.key))
+        {
+            previous.next = x.next;
+            size--;
+            return;
+        }
+        previous = x;
+    }
 
 
     }
@@ -54,6 +72,8 @@ public class SequentialSearchST<Key, Value>
         for (Node x = first; x != null; x = x.next)
             if (key.equals ( x.key))
         { x.val = val; return; }
+
+
         first = new Node(key, val, first);
             size++;
     }
