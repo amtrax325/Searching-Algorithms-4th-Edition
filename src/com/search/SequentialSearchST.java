@@ -2,7 +2,6 @@ package com.search;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class SequentialSearchST<Key, Value>
 {
@@ -14,7 +13,6 @@ public class SequentialSearchST<Key, Value>
         Key key;
         Value val;
         Node next;
-        Node before;
         public Node(Key key, Value val, Node next)
         {
             this.key = key;
