@@ -1,6 +1,6 @@
 package com.main;
 
-import com.search.SequentialSearchST;
+import com.search.SequentialSearchOrdered;
 
 import java.io.FileNotFoundException;
 
@@ -8,7 +8,8 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
 
-        SequentialSearchST<String,Integer> x = new SequentialSearchST<>();
+        SequentialSearchOrdered<String,Integer> a = new SequentialSearchOrdered<>();
+
 
 
     }
