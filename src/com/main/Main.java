@@ -11,6 +11,5 @@ public class Main {
         SequentialSearchOrdered<String,Integer> a = new SequentialSearchOrdered<>();
 
 
-
     }
 }

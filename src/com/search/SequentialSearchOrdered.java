@@ -70,14 +70,7 @@ public class SequentialSearchOrdered<Key extends Comparable<Key>, Value>
 
     public void put(Key key, Value val)
     {
-        for (Node x = first; x != null; x = x.next)
-            if (key.equals ( x.key))
-        { x.val = val; return; }
-
-
-
-        first = new Node(key, val, first);
-            this.sort();
+          this.insert(key,val);
             size++;
     }
 
@@ -115,6 +108,37 @@ public class SequentialSearchOrdered<Key extends Comparable<Key>, Value>
                 return key;
         }
         return k;
+    }
+
+    private void insert(Key key, Value val)
+    {
+
+        if(size == 0)
+        {
+            first = new Node(key,val,first);
+            return;
+        }
+        Node x;
+        for (x = first; x != null; x = x.next)
+        {
+            int cmp = x.key.compareTo(key);
+            if (cmp < 0 && x.next == null){
+                x.next =  new Node(key,val,null);
+            return;}
+           else if (cmp > 0)
+            {
+                    Node temp = new Node(x.key,x.val,x.next);
+                    x.key = key; x.val = val; x.next =  new Node(temp.key,temp.val,temp.next);
+                return;
+            }
+           else if (cmp == 0)
+            {
+                x.val = val; return;
+            }
+
+        }
+
+
     }
 
     //insertion sort
