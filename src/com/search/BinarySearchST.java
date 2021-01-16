@@ -56,12 +56,17 @@ public Key ceiling(Key key)
 }
 public Key floor(Key key)
 {
-    //TODO: implement floor method
-    return null;
+    int i = rank(key);
+    if( i < N && keys[i].compareTo(key) == 0)
+        return keys[i];
+    if(i == 0)
+        return null;
+    else return keys[i-1];
+
 }
 
   public void delete(Key key){
-        //TODO: implement delete method
+        int i = rank(key);
   }
   //recursion version of rank
   private int rank(Key key, int l, int h)
