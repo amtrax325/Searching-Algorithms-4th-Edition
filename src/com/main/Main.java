@@ -18,8 +18,7 @@ public class Main {
         a.put("f",2);
         a.put("g",2);
 
-        System.out.println(a.keys());
-        System.out.println(a.floor("i"));
+   );
 
 
     }
