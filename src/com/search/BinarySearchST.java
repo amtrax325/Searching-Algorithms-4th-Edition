@@ -1,5 +1,6 @@
 package com.search;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -56,12 +57,26 @@ public Key ceiling(Key key)
 }
 public Key floor(Key key)
 {
-    //TODO: implement floor method
-    return null;
+    int i = rank(key);
+    if( i < N && keys[i].compareTo(key) == 0)
+        return keys[i];
+    if(i == 0)
+        return null;
+    else return keys[i-1];
+
 }
 
   public void delete(Key key){
-        //TODO: implement delete method
+        int i = rank(key);
+        if ( i < N && keys[i].compareTo(key) == 0)
+        {
+            for (int j = i; j < N-1; j++)
+            {
+                keys[j] = keys[j+1];
+                vals[j] = vals[j+1];
+            }
+            N--;
+        }
   }
   //recursion version of rank
   private int rank(Key key, int l, int h)
@@ -78,7 +93,7 @@ public Key floor(Key key)
 
 
 
-    private int rank(Key key) {
+    public int rank(Key key) {
         int lo = 0, hi = N-1;
 
         while(lo <= hi)
@@ -94,6 +109,8 @@ public Key floor(Key key)
 
 public Iterable<Key> keys(Key lo, Key hi)
 {
+    if(this.isEmpty())
+        return Collections.emptyList();
     List<Key> q = new LinkedList<>();
     for (int i = rank(lo); i < rank(hi); i++)
         q.add(keys[i]);
@@ -103,6 +120,8 @@ public Iterable<Key> keys(Key lo, Key hi)
 }
 public Iterable<Key> keys()
 {
+    if(this.isEmpty())
+        return Collections.emptyList();
     List<Key> q = new LinkedList<>();
     for (int i = rank(keys[0]); i < rank(keys[N-1]); i++)
         q.add(keys[i]);
