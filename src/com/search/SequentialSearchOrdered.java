@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-//TODO: Implement insertion method that keeps sorted order.
+
 public class SequentialSearchOrdered<Key extends Comparable<Key>, Value>
 {
 
