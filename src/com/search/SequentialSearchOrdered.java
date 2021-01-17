@@ -30,7 +30,7 @@ public class SequentialSearchOrdered<Key extends Comparable<Key>, Value>
         return x.val;
         return null;
     }
-
+@Deprecated
     public void delete (Key key)
     {
     if(key.equals(first.key))
@@ -50,8 +50,21 @@ public class SequentialSearchOrdered<Key extends Comparable<Key>, Value>
         }
         previous = x;
     }
+    }
+    public void deleteST(Key key)
+    {
+        first = delete(first,key);
+    }
+    private  Node delete(Node x, Key key)
+    {
+        if(x.key.compareTo(key) == 0)
+        {
+            size--;
+            return x.next;
+        }
 
-
+        x.next = delete(x.next,key);
+        return x;
     }
     public int size()
     {
