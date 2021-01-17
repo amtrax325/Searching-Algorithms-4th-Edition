@@ -3,7 +3,7 @@ package com.search;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SequentialSearchST<Key, Value>
+public class SequentialSearchST<Key extends Comparable<Key>, Value>
 {
 
     private int size = 0;
@@ -28,27 +28,41 @@ public class SequentialSearchST<Key, Value>
         return null;
     }
 
+    @Deprecated
     public void delete (Key key)
     {
-    if(key.equals(first.key))
-    {
-        first  = first.next;
-        size--;
-        return;
-    }
-    Node previous = first;
-    for(Node x = first.next; x != null; x = x.next)
-    {
-        if (key.equals(x.key))
+        if(key.equals(first.key))
         {
-            previous.next = x.next;
+            first  = first.next;
             size--;
             return;
         }
-        previous = x;
+       Node previous = first;
+        for(Node x = first.next; x != null; x = x.next)
+        {
+            if (key.equals(x.key))
+            {
+                previous.next = x.next;
+                size--;
+                return;
+            }
+            previous = x;
+        }
     }
+    public void deleteST(Key key)
+    {
+        first = delete(first,key);
+    }
+    private Node delete(Node x, Key key)
+    {
+        if(x.key.compareTo(key) == 0)
+        {
+            size--;
+            return x.next;
+        }
 
-
+        x.next = delete(x.next,key);
+        return x;
     }
     public int size()
     {
