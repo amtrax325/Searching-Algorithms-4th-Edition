@@ -154,26 +154,4 @@ public class SequentialSearchOrdered<Key extends Comparable<Key>, Value>
 
     }
 
-    //insertion sort
-    private void sort()
-    {
-        Node current = first, index;
-
-        while(current != null) {
-            index = current.next;
-            while (index != null) {
-                if (current.key.compareTo(index.key) > 0) {
-                    Key tempK = current.key;
-                    Value tempV = current.val;
-                    current.key = index.key;
-                    current.val = index.val;
-                    index.key = tempK;
-                    index.val = tempV;
-                }
-        index = index.next;
-            }
-            current = current.next;
-        }
-    }
-
 }
