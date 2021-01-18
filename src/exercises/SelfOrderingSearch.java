@@ -2,17 +2,16 @@ package exercises;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 // task 3.1.2
-public class ArrayST <Key, Value> {
+public class SelfOrderingSearch<Key, Value> {
 
     private  Key [] keys;
     private Value [] vals;
     private int N;
     private int arrayCapacity;
 
-    public ArrayST(int capacity)
+    public SelfOrderingSearch(int capacity)
     {
         keys = (Key[]) new Comparable [capacity];
         vals = (Value[]) new Comparable [capacity];
@@ -36,9 +35,25 @@ public class ArrayST <Key, Value> {
     {
         for (int i =0; i  < N; i++)
             if(key.equals(keys[i]))
-                return vals[i];
+                return move(i);
 
             return null;
+    }
+
+    private Value move(int p)
+    {
+        Key key = keys[p];
+        Value value = vals[p];
+        while(p > 0)
+        {
+            keys[p] = keys[p-1];
+            vals[p] = vals[p-1];
+            p--;
+        }
+        keys[0] = key;
+        vals[0] = value;
+        return value;
+
     }
 
     public Value delete(Key key)
