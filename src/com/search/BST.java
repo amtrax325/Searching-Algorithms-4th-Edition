@@ -1,5 +1,8 @@
 package com.search;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class BST <Key extends Comparable<Key>,Value>{
 
     private Node root;
@@ -140,14 +143,78 @@ public Key select(int k)
         int cmp = key.compareTo(x.key);
         if (cmp  == 0)
             return size(x.left);
-        if (cmp < 0)
+        else if (cmp < 0)
             return rank(key,x.left);
-        if (cmp > 1)
+        else
             return  1 + size(x.left) + rank(key,x.right);
 
+    }
+public void deleteMin()
+{
+    root = deleteMin(root);
+}
 
+    private Node deleteMin(Node x) {
+        if (x.left == null) return x.right;
+        x.left = deleteMin(x.left);
+        x.N = size(x.left) + size(x.right) + 1;
+        return x;
+    }
+public void deleteMax()
+{
+    root = deleteMax(root);
+}
 
-        return 0;
+    private Node deleteMax(Node x) {
+        if (x.right == null) return x.left;
+        x.right = deleteMax(x.right);
+        x.N = size(x.left) + size(x.right) +1;
+        return x;
+
+    }
+
+    public void delete (Key key)
+    {
+        root = delete(root,key);
+    }
+
+    private Node delete(Node x, Key key) {
+        if (x == null) return  null;
+        int cmp = key.compareTo(x.key);
+        if (cmp < 0) x.left = delete(x.left,key);
+        else if (cmp > 0) x.right = delete(x.right,key);
+        else {
+            if (x.right == null) return x.left;
+            if (x.left == null ) return x.right;
+            Node t = x;
+
+            x = min(t.right);
+            x.right = deleteMin(t.right);
+            x.left = t.left;
+        }
+        x.N = size(x.left) + size(x.right) +1;
+        return x;
+    }
+
+    public Iterable<Key> keys()
+    {
+        return keys(min(),max());
+    }
+
+    public Iterable<Key> keys(Key lo, Key hi) {
+        List<Key> queue = new LinkedList<>();
+        keys(root,queue,lo,hi);
+        return  queue;
+
+    }
+
+    private void keys(Node x, List<Key> queue, Key lo, Key hi) {
+            if (x == null) return;
+            int cmplo = lo.compareTo(x.key);
+            int cmphi = hi.compareTo(x.key);
+            if (cmplo < 0) keys(x.left,queue,lo,hi);
+            if (cmplo <= 0 && cmphi >=0 ) queue.add(x.key);
+            if (cmphi > 0) keys(x.right,queue,lo,hi);
     }
 
 
