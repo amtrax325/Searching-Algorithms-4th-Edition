@@ -136,6 +136,14 @@ public Key select(int k)
 
     private int rank(Key key, Node x) {
 
+        if (x == null) return 0;
+        int cmp = key.compareTo(x.key);
+        if (cmp  == 0)
+            return size(x.left);
+        if (cmp < 0)
+            return rank(key,x.left);
+        if (cmp > 1)
+            return  1 + size(x.left) + rank(key,x.right);
 
 
 
