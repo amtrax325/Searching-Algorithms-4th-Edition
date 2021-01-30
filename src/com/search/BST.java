@@ -115,8 +115,17 @@ public Key select(int k)
     return select(root,k).key;
 }
 
-    private Node select(Node root, int k) {
-        //TODO: implement method
+    private Node select(Node x, int k) {
+
+        int t = size(x.left);
+       // if (x == null) return null;
+        if(t > k)
+            return select(x.left,k);
+        if (t < k)
+            return select(x.right,k-t-1);
+        if (t == k)
+            return x;
+
         return null;
     }
 
@@ -125,9 +134,12 @@ public Key select(int k)
         return  rank(key,root);
     }
 
-    private int rank(Key key, Node root) {
-        //TODO: implement method
-        return null;
+    private int rank(Key key, Node x) {
+
+
+
+
+        return 0;
     }
 
 
