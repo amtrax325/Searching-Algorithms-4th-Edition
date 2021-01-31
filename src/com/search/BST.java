@@ -217,5 +217,19 @@ public void deleteMax()
             if (cmphi > 0) keys(x.right,queue,lo,hi);
     }
 
+    public int height()
+    {
+        return  height(root);
+
+    }
+
+
+
+    private int height(Node x) {
+        // jezeli drzewo nie ma dzieci, to jego wysokosc wynosi 0
+        if (x == null) return -1;
+        return 1 + Math.max(height(x.left), height(x.right));
+    }
+
 
 }
