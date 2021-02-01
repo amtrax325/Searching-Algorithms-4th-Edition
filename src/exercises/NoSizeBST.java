@@ -1,7 +1,5 @@
 package exercises;
 
-import com.search.BST;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,7 +8,7 @@ public class NoSizeBST<Key extends Comparable<Key>,Value>{
     private Node root;
 
     private class Node{
-        private Key key;
+        private final Key key;
         private Value val;
         private Node left,right;
 
@@ -92,10 +90,8 @@ public class NoSizeBST<Key extends Comparable<Key>,Value>{
             return select(x.left,k);
         if (t < k)
             return select(x.right,k-t-1);
-        if (t == k)
-            return x;
-
-        return null;
+         else
+             return x;
     }
     public Key floor(Key key)
     {

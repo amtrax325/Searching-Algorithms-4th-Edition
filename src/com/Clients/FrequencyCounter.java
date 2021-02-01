@@ -19,7 +19,7 @@ public class FrequencyCounter {
         {
             String word = in.nextLine();
 
-            word = word.replaceAll(",|\\.|\\?|;|\\*|!|-|:|\"","");
+            word = word.replaceAll("[,.?;*!\\-:\"]","");
             String [] words = word.split("\\s");
 
             for (String w : words)

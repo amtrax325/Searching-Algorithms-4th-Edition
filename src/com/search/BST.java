@@ -8,7 +8,7 @@ public class BST <Key extends Comparable<Key>,Value>{
     private Node root;
 
     private class Node{
-        private Key key;
+        private final Key key;
         private Value val;
         private Node left,right;
         private int N;
@@ -124,12 +124,12 @@ public Key select(int k)
        // if (x == null) return null;
         if(t > k)
             return select(x.left,k);
-        if (t < k)
+        else if (t < k)
             return select(x.right,k-t-1);
-        if (t == k)
+        else
             return x;
 
-        return null;
+
     }
 
     public int rank(Key key)
@@ -231,7 +231,7 @@ public void deleteMax()
     }
 public boolean contains(Key key)
 {
-return  this.get(key) == null ? false : true;
+return this.get(key) != null;
 }
 
 }
