@@ -1,9 +1,11 @@
-package com.search;
+package exercises;
+
+import com.search.BST;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class BST <Key extends Comparable<Key>,Value>{
+public class NoSizeBST<Key extends Comparable<Key>,Value>{
 
     private Node root;
 
@@ -11,11 +13,9 @@ public class BST <Key extends Comparable<Key>,Value>{
         private Key key;
         private Value val;
         private Node left,right;
-        private int N;
 
-
-    public Node (Key key, Value val, int N){
-        this.key = key; this.val = val; this.N = N;
+    public Node (Key key, Value val){
+        this.key = key; this.val = val;
         }
     }
 
@@ -25,8 +25,10 @@ public class BST <Key extends Comparable<Key>,Value>{
     }
     private int size(Node x)
     {
-        if (x == null) return 0;
-        else return x.N;
+        if (x == null)
+            return 0;
+
+        return 1 + size(x.left) + size(x.right);
     }
     public Value get(Key key)
     {
@@ -46,13 +48,12 @@ public class BST <Key extends Comparable<Key>,Value>{
     }
     private Node put(Node x, Key key, Value val)
     {
-        if (x == null) return new Node(key,val,1);
+        if (x == null) return new Node(key,val);
         int cmp = key.compareTo(x.key);
 
         if(cmp < 0) x.left = put(x.left,key,val);
        else  if(cmp > 0) x.right = put(x.right,key,val);
        else x.val = val;
-       x.N = size(x.left) + size(x.right) + 1;
        return x;
     }
     public Key min()
@@ -78,7 +79,24 @@ public class BST <Key extends Comparable<Key>,Value>{
             return (max(x.right));
 
     }
+    public Key select(int k)
+    {
+        return select(root,k).key;
+    }
 
+    private Node select(Node x, int k) {
+
+        int t = size(x.left);
+        // if (x == null) return null;
+        if(t > k)
+            return select(x.left,k);
+        if (t < k)
+            return select(x.right,k-t-1);
+        if (t == k)
+            return x;
+
+        return null;
+    }
     public Key floor(Key key)
     {
         Node x = floor(root,key);
@@ -97,6 +115,21 @@ public class BST <Key extends Comparable<Key>,Value>{
       else return x;
 
     }
+    public int rank(Key key)
+    {
+        return  rank(key,root);
+    }
+    private int rank(Key key, Node x) {
+
+        if (x == null) return 0;
+        int cmp = key.compareTo(x.key);
+        if (cmp  == 0)
+            return size(x.left);
+        else if (cmp < 0)
+            return rank(key,x.left);
+        else
+            return  1 + size(x.left) + rank(key,x.right);
+    }
     public Key ceiling(Key key)
     {
         Node x = ceiling(root,key);
@@ -113,41 +146,7 @@ public class BST <Key extends Comparable<Key>,Value>{
       if (t != null) return t;
       else return x;
     }
-public Key select(int k)
-{
-    return select(root,k).key;
-}
 
-    private Node select(Node x, int k) {
-
-        int t = size(x.left);
-       // if (x == null) return null;
-        if(t > k)
-            return select(x.left,k);
-        if (t < k)
-            return select(x.right,k-t-1);
-        if (t == k)
-            return x;
-
-        return null;
-    }
-
-    public int rank(Key key)
-    {
-        return  rank(key,root);
-    }
-
-    private int rank(Key key, Node x) {
-
-        if (x == null) return 0;
-        int cmp = key.compareTo(x.key);
-        if (cmp  == 0)
-            return size(x.left);
-        else if (cmp < 0)
-            return rank(key,x.left);
-        else
-            return  1 + size(x.left) + rank(key,x.right);
-    }
 public void deleteMin()
 {
     root = deleteMin(root);
@@ -156,7 +155,6 @@ public void deleteMin()
     private Node deleteMin(Node x) {
         if (x.left == null) return x.right;
         x.left = deleteMin(x.left);
-        x.N = size(x.left) + size(x.right) + 1;
         return x;
     }
 public void deleteMax()
@@ -167,7 +165,6 @@ public void deleteMax()
     private Node deleteMax(Node x) {
         if (x.right == null) return x.left;
         x.right = deleteMax(x.right);
-        x.N = size(x.left) + size(x.right) +1;
         return x;
 
     }
@@ -191,7 +188,6 @@ public void deleteMax()
             x.right = deleteMin(t.right);
             x.left = t.left;
         }
-        x.N = size(x.left) + size(x.right) +1;
         return x;
     }
 
@@ -222,16 +218,10 @@ public void deleteMax()
 
     }
 
-
-
     private int height(Node x) {
-        // jezeli drzewo nie ma dzieci, to jego wysokosc wynosi 0
         if (x == null) return -1;
         return 1 + Math.max(height(x.left), height(x.right));
     }
-public boolean contains(Key key)
-{
-return  this.get(key) == null ? false : true;
-}
+
 
 }
