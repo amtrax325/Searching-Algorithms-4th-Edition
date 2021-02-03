@@ -174,8 +174,6 @@ public class BST <Key extends Comparable<Key>,Value>{
             } else {
                 t = x.key;
                 x = x.right;
-                if (x == null)
-                    return t;
             }
         }
         return t;
