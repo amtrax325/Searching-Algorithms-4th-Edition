@@ -3,9 +3,11 @@ package com.main;
 import com.search.BST;
 import com.search.BinarySearchST;
 import com.search.SequentialSearchST;
+import exercises.NoSizeBST;
 import exercises.SelfOrderingSearch;
 
 import java.io.FileNotFoundException;
+import java.sql.SQLOutput;
 import java.util.Arrays;
 
 public class Main {
@@ -26,7 +28,9 @@ a.put("S",1);
 a.put("Z",1);
 a.put("Y",1);
 
-        System.out.println(a.height());
+
+
+
 
     }
 }

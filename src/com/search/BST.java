@@ -112,6 +112,25 @@ public class BST <Key extends Comparable<Key>,Value>{
        else
            return (min(x.left));
     }
+    public Key Min()
+    {
+        Node x = root;
+        while(x.left != null)
+        {
+             x = x.left;
+        }
+        return x.key;
+    }
+    public Key Max()
+    {
+        Node x = root;
+        while(x.right != null)
+        {
+            x = x.right;
+        }
+        return x.key;
+    }
+
     public Key max()
     {
         return max(root).key;
@@ -137,12 +156,32 @@ public class BST <Key extends Comparable<Key>,Value>{
       if( x == null) return null;
       int cmp = key.compareTo(x.key);
       if(cmp == 0) return x;
-      if(cmp > 0) return floor(x.left,key);
+      if(cmp < 0) return floor(x.left,key);
       Node t = floor(x.right,key);
       if(t != null) return t;
       else return x;
+    }
+
+    public Key Floor(Key key)
+    {
+        Node x = root;
+        Key t = null;
+        while (x != null) {
+            int cmp = key.compareTo(x.key);
+            if (cmp == 0) return x.key;
+            else if (cmp < 0) {
+                x = x.left;
+            } else {
+                t = x.key;
+                x = x.right;
+                if (x == null)
+                    return t;
+            }
+        }
+        return t;
 
     }
+
     public Key ceiling(Key key)
     {
         Node x = ceiling(root,key);
