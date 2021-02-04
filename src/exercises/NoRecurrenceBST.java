@@ -1,5 +1,7 @@
 package exercises;
 
+import com.search.BST;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -75,7 +77,7 @@ public class NoRecurrenceBST<Key extends Comparable<Key>,Value>{
         }
     }
 
-    public Key min()
+    public Key Min()
     {
         Node x = root;
         while(x.left != null)
@@ -216,6 +218,19 @@ private Node deleteMax(Node x) {
         x.N = size(x.left) + size(x.right) +1;
         return x;
     }
+
+    public Key min()
+    {
+        return min(root).key;
+    }
+    private Node min(Node x)
+    {
+        if (x.left == null)
+            return x;
+        else
+            return (min(x.left));
+    }
+
 
     public Iterable<Key> keys()
     {
