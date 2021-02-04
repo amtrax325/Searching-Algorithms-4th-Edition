@@ -194,7 +194,27 @@ public class BST <Key extends Comparable<Key>,Value>{
       Node t = ceiling(x.left,key);
       if (t != null) return t;
       else return x;
+
     }
+    public Key Ceiling(Key key)
+    {
+        Node x = root;
+        Key t = null;
+        while (x!=null)
+        {
+            int cmp = key.compareTo(x.key);
+            if (cmp == 0) return key;
+            else if (cmp > 0) x = x.right;
+            else{
+                t  = x.key;
+                x = x.left;
+            }
+        }
+        return t;
+
+
+    }
+
 public Key select(int k)
 {
     return select(root,k).key;
