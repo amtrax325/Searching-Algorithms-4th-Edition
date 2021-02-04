@@ -33,18 +33,6 @@ public class BST <Key extends Comparable<Key>,Value>{
         return get(root,key);
     }
 
-    public Value Get(Key key)
-    {
-        Node x = root;
-        while (x != null){
-
-            int cmp = key.compareTo(x.key);
-            if(cmp == 0) return x.val;
-            else if (cmp > 0) x = x.right;
-            else x = x.left;
-        }
-        return null;
-    }
     public Value get(Node x,Key key)
     {
         if (x == null) return  null;
@@ -70,37 +58,6 @@ public class BST <Key extends Comparable<Key>,Value>{
 
     }
 
-    public void Put(Key key, Value val)
-    {
-        Node n = new Node(key,val,1);
-        if (root == null) {
-            root = n;
-            return;
-        }
-        Node x = root;
-        Node parent = null;
-
-        while (x != null)
-        {
-            int cmp = key.compareTo(x.key);
-            if (cmp == 0) {x.val = val; return;}
-            else if (cmp > 0) { parent = x; x = x.right;}
-            else  {parent = x; x = x.left;}
-        }
-        if (key.compareTo(parent.key) > 0)
-            parent.right = n;
-        else
-            parent.left = n;
-
-        x = root;
-        while (x.key != key)
-        {
-            int cmp = key.compareTo(x.key);
-            if (cmp == 0) return;
-            else if (cmp > 0) {x.N++; x = x.right;}
-            else {x.N++; x = x.left;}
-        }
-    }
     public Key min()
     {
         return min(root).key;
@@ -112,24 +69,7 @@ public class BST <Key extends Comparable<Key>,Value>{
        else
            return (min(x.left));
     }
-    public Key Min()
-    {
-        Node x = root;
-        while(x.left != null)
-        {
-             x = x.left;
-        }
-        return x.key;
-    }
-    public Key Max()
-    {
-        Node x = root;
-        while(x.right != null)
-        {
-            x = x.right;
-        }
-        return x.key;
-    }
+
 
     public Key max()
     {
@@ -162,22 +102,6 @@ public class BST <Key extends Comparable<Key>,Value>{
       else return x;
     }
 
-    public Key Floor(Key key)
-    {
-        Node x = root;
-        Key t = null;
-        while (x != null) {
-            int cmp = key.compareTo(x.key);
-            if (cmp == 0) return x.key;
-            else if (cmp < 0) {
-                x = x.left;
-            } else {
-                t = x.key;
-                x = x.right;
-            }
-        }
-        return t;
-    }
 
     public Key ceiling(Key key)
     {
@@ -196,24 +120,7 @@ public class BST <Key extends Comparable<Key>,Value>{
       else return x;
 
     }
-    public Key Ceiling(Key key)
-    {
-        Node x = root;
-        Key t = null;
-        while (x!=null)
-        {
-            int cmp = key.compareTo(x.key);
-            if (cmp == 0) return key;
-            else if (cmp > 0) x = x.right;
-            else{
-                t  = x.key;
-                x = x.left;
-            }
-        }
-        return t;
 
-
-    }
 
 public Key select(int k)
 {
@@ -232,24 +139,6 @@ public Key select(int k)
             return x;
     }
 
-    public Key Select(int k)
-    {
-        Node x  = root;
-        while (x != null)
-        {
-            int t = size(x.left);
-            if (t > k)
-                x = x.left;
-            else if (t < k)
-            {
-                k = k - t - 1;
-                x = x.right;
-            }
-            else return x.key;
-        }
-       return null;
-
-    }
     public int rank(Key key)
     {
         return  rank(key,root);
@@ -267,25 +156,6 @@ public Key select(int k)
             return  1 + size(x.left) + rank(key,x.right);
     }
 
-    public int Rank(Key key)
-    {
-        Node x = root;
-        int total = 0;
-        while (x != null)
-        {
-            int cmp = key.compareTo(x.key);
-            if (cmp == 0)
-                return total + size(x.left);
-            else if (cmp < 0)
-                x = x.left;
-            else {
-                total += 1 + size(x.left);
-                x = x.right;
-            }
-        }
-        return total;
-
-    }
 public void deleteMin()
 {
     root = deleteMin(root);
@@ -359,8 +229,6 @@ public void deleteMax()
         return  height(root);
 
     }
-
-
 
     private int height(Node x) {
         // jezeli drzewo nie ma dzieci, to jego wysokosc wynosi 0
