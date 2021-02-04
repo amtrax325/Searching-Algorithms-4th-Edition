@@ -222,18 +222,34 @@ public Key select(int k)
 
     private Node select(Node x, int k) {
 
+        if (x == null) return null;
         int t = size(x.left);
-       // if (x == null) return null;
         if(t > k)
             return select(x.left,k);
         else if (t < k)
             return select(x.right,k-t-1);
         else
             return x;
-
-
     }
 
+    public Key Select(int k)
+    {
+        Node x  = root;
+        while (x != null)
+        {
+            int t = size(x.left);
+            if (t > k)
+                x = x.left;
+            else if (t < k)
+            {
+                k = k - t - 1;
+                x = x.right;
+            }
+            else return x.key;
+        }
+       return null;
+
+    }
     public int rank(Key key)
     {
         return  rank(key,root);
@@ -249,6 +265,26 @@ public Key select(int k)
             return rank(key,x.left);
         else
             return  1 + size(x.left) + rank(key,x.right);
+    }
+
+    public int Rank(Key key)
+    {
+        Node x = root;
+        int total = 0;
+        while (x != null)
+        {
+            int cmp = key.compareTo(x.key);
+            if (cmp == 0)
+                return total + size(x.left);
+            else if (cmp < 0)
+                x = x.left;
+            else {
+                total += 1 + size(x.left);
+                x = x.right;
+            }
+        }
+        return total;
+
     }
 public void deleteMin()
 {
