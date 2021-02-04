@@ -32,6 +32,7 @@ public class BST <Key extends Comparable<Key>,Value>{
     {
         return get(root,key);
     }
+
     public Value get(Node x,Key key)
     {
         if (x == null) return  null;
@@ -54,7 +55,9 @@ public class BST <Key extends Comparable<Key>,Value>{
        else x.val = val;
        x.N = size(x.left) + size(x.right) + 1;
        return x;
+
     }
+
     public Key min()
     {
         return min(root).key;
@@ -66,6 +69,8 @@ public class BST <Key extends Comparable<Key>,Value>{
        else
            return (min(x.left));
     }
+
+
     public Key max()
     {
         return max(root).key;
@@ -95,8 +100,9 @@ public class BST <Key extends Comparable<Key>,Value>{
       Node t = floor(x.right,key);
       if(t != null) return t;
       else return x;
-
     }
+
+
     public Key ceiling(Key key)
     {
         Node x = ceiling(root,key);
@@ -112,7 +118,10 @@ public class BST <Key extends Comparable<Key>,Value>{
       Node t = ceiling(x.left,key);
       if (t != null) return t;
       else return x;
+
     }
+
+
 public Key select(int k)
 {
     return select(root,k).key;
@@ -120,16 +129,14 @@ public Key select(int k)
 
     private Node select(Node x, int k) {
 
+        if (x == null) return null;
         int t = size(x.left);
-       // if (x == null) return null;
         if(t > k)
             return select(x.left,k);
         else if (t < k)
             return select(x.right,k-t-1);
         else
             return x;
-
-
     }
 
     public int rank(Key key)
@@ -148,6 +155,7 @@ public Key select(int k)
         else
             return  1 + size(x.left) + rank(key,x.right);
     }
+
 public void deleteMin()
 {
     root = deleteMin(root);
@@ -221,8 +229,6 @@ public void deleteMax()
         return  height(root);
 
     }
-
-
 
     private int height(Node x) {
         // jezeli drzewo nie ma dzieci, to jego wysokosc wynosi 0
