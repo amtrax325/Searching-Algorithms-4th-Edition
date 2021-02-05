@@ -12,8 +12,6 @@ public class BST <Key extends Comparable<Key>,Value>{
         private Value val;
         private Node left,right;
         private int N;
-
-
     public Node (Key key, Value val, int N){
         this.key = key; this.val = val; this.N = N;
         }
@@ -239,5 +237,21 @@ public boolean contains(Key key)
 {
 return this.get(key) != null;
 }
+
+public boolean isOrdered(Key min, Key max)
+{
+    return isOrdered(min,max,root);
+}
+
+private boolean isOrdered(Key min, Key max, Node x)
+{
+    if (x == null || x.key == min || x.key == max)
+        return true;
+    int cmpMax = max.compareTo(x.key);
+    int cmpLow = min.compareTo(x.key);
+
+    return cmpMax > 0 && cmpLow < 0 && isOrdered(min, max, x.left) && isOrdered(min, max, x.right);
+}
+
 
 }
