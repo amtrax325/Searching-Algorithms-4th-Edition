@@ -238,11 +238,23 @@ public boolean contains(Key key)
 return this.get(key) != null;
 }
 
+
+
+    public boolean isBinaryTree() {
+        return isBinaryTree(root);
+    }
+
+private boolean isBinaryTree(Node x)
+{
+    try {
+        return (x.N > x.left.N && x.N > x.right.N && isBinaryTree(x.left) && isBinaryTree(x.right));
+    }catch (NullPointerException exception){
+        return true; }
+}
 public boolean isOrdered(Key min, Key max)
 {
     return isOrdered(min,max,root);
 }
-
 private boolean isOrdered(Key min, Key max, Node x)
 {
     if (x == null || x.key == min || x.key == max)
@@ -252,6 +264,5 @@ private boolean isOrdered(Key min, Key max, Node x)
 
     return cmpMax > 0 && cmpLow < 0 && isOrdered(min, max, x.left) && isOrdered(min, max, x.right);
 }
-
 
 }
