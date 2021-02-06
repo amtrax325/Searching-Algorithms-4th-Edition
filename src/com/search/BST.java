@@ -250,13 +250,11 @@ public boolean hasNoDuplicates()
 
     private boolean hasNoDuplicates(Node x) {
         LinkedList<Key> a = (LinkedList<Key>) keys(min(x).key,max(x).key);
-        System.out.println(a.size());
         while(a.size() > 1)
         {
             if (a.get(0).compareTo(a.get(1)) >= 0)
                 return false;
             else a.removeFirst();
-            System.out.println(a.size());
         }
         return true;
     }
