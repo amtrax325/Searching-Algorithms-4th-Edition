@@ -243,26 +243,45 @@ return this.get(key) != null;
     public boolean isBinaryTree() {
         return isBinaryTree(root);
     }
-
-private boolean isBinaryTree(Node x)
+public boolean hasNoDuplicates()
 {
-    try {
-        return (x.N > x.left.N && x.N > x.right.N && isBinaryTree(x.left) && isBinaryTree(x.right));
-    }catch (NullPointerException exception){
-        return true; }
+  return   hasNoDuplicates(root);
+}
+
+    private boolean hasNoDuplicates(Node x) {
+        LinkedList<Key> a = (LinkedList<Key>) keys(min(x).key,max(x).key);
+        System.out.println(a.size());
+        while(a.size() > 1)
+        {
+            if (a.get(0).compareTo(a.get(1)) >= 0)
+                return false;
+            else a.removeFirst();
+            System.out.println(a.size());
+        }
+        return true;
+    }
+
+    private boolean isBinaryTree(Node x)
+{
+    return(size(x) > size(x.left) && size(x) > size(x.right));
 }
 public boolean isOrdered(Key min, Key max)
 {
     return isOrdered(min,max,root);
 }
-private boolean isOrdered(Key min, Key max, Node x)
-{
-    if (x == null || x.key == min || x.key == max)
-        return true;
-    int cmpMax = max.compareTo(x.key);
-    int cmpLow = min.compareTo(x.key);
+private boolean isOrdered(Key min, Key max, Node x) {
+   if(x == null)
+       return true;
+        int cmpMax = max.compareTo(x.key);
+        int cmpLow = min.compareTo(x.key);
 
-    return cmpMax > 0 && cmpLow < 0 && isOrdered(min, max, x.left) && isOrdered(min, max, x.right);
-}
+        if (cmpLow == 0 && x.left == null)
+            return true;
+        else if (cmpMax == 0 && x.right == null)
+            return true;
+        else
+            return cmpMax > 0 && cmpLow < 0 && isOrdered(min, x.key, x.left) && isOrdered(x.key, max, x.right);
+
+    }
 
 }
