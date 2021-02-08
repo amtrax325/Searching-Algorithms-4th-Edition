@@ -249,7 +249,7 @@ public class BST<Key extends Comparable<Key>, Value> {
     }
 
     private boolean isBinaryTree(Node x) {
-        return (size(x) > size(x.left) && size(x) > size(x.right));
+        return (size(x) > size(x.left) + 1  && size(x) > size(x.right) + 1);
     }
 
     public boolean isOrdered(Key min, Key max) {
@@ -262,16 +262,11 @@ public class BST<Key extends Comparable<Key>, Value> {
         int cmpMax = max.compareTo(x.key);
         int cmpLow = min.compareTo(x.key);
 
-        if (cmpLow == 0 && x.left == null)
-            return true;
-        else if (cmpMax == 0 && x.right == null)
-            return true;
-        else
-            return cmpMax > 0 && cmpLow < 0 && isOrdered(min, x.key, x.left) && isOrdered(x.key, max, x.right);
+            return cmpMax >= 0 && cmpLow <= 0 && isOrdered(min, x.key, x.left) && isOrdered(x.key, max, x.right);
 
     }
 
-    public boolean selectRanktest()
+    public boolean selectRankTest()
     {
         LinkedList<Key> a = (LinkedList<Key>) keys();
         for (int i = 0; i < size(); i++)
