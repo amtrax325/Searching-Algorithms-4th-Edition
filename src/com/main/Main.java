@@ -32,9 +32,7 @@ public class Main {
                 x.put("po",56);
 
 
-                x.get("u");
-        System.out.println(x.get("u"));
-        System.out.println(x.keys());
+        System.out.println(x.is23());
 
 
 

@@ -24,6 +24,17 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
             this.N = N;
         }
     }
+    public boolean is23(){
+        return is23(root);
+    }
+    private boolean is23(Node x ){
+        try {
+            if (isRed(x.right))
+                return false;
+            return (is23(x.right) && is23(x.right));
+        }catch (NullPointerException nullPointerException)
+            {return true;}
+    }
     private  boolean isRed(Node x)
     {
         if (x == null)
