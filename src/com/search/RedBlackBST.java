@@ -9,7 +9,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     private static final boolean BLACK = false;
 
     private Node root;
-
+    private Node latest;
     private class Node {
         private final Key key;
         private Value val;
@@ -68,11 +68,14 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     }
 
     public Value get(Key key) {
+        if( latest != null &&  key == latest.key)
+            return latest.val;
         return get(root, key);
     }
 
     public Value get(Node x, Key key) {
         if (x == null) return null;
+
         int cmp = key.compareTo(x.key);
         if (cmp < 0) return get(x.left, key);
         else if (cmp > 0) return get(x.right, key);
@@ -80,6 +83,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     }
 
     public void put(Key key, Value val) {
+        if(latest != null && key == latest.key)
+            latest.val = val;
         root = put(root, key, val); root.color = BLACK;
     }
 
@@ -97,7 +102,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
         h.N = size(h.left) + size(h.right) + 1;
 
-
+        latest = h;
         return h;
 
     }
