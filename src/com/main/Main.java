@@ -21,7 +21,6 @@ public class Main {
 
 
                 x.put("g",1);
-               x.get("g");
                 x.put("a",2);
                 x.put("f",2);
                 x.put("g",2);
@@ -31,8 +30,6 @@ public class Main {
                 x.put("i",56);
                 x.put("po",56);
 
-
-        System.out.println(x.is23());
 
 
 

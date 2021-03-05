@@ -65,9 +65,9 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     }
     private  void flipColors(Node h)
     {
-        h.color = RED;
-        h.left.color = BLACK;
-        h.right.color = BLACK;
+        h.color = !h.color;
+        h.left.color =  !h.left.color;
+        h.right.color = !h.right.color;
     }
     public int size() {
         return size(root);
@@ -117,7 +117,82 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         return h;
 
     }
+    private Node moveRedLeft(Node h){
+        flipColors(h);
+        if (isRed(h.right.left)){
+            h.right = rotateRight(h.right);
+            h = rotateLeft(h);
+        }
+        return h;
+    }
+    private Node moveRedRight(Node h) {
+        flipColors(h);
 
+        if(!isRed(h.left.left))
+            h = rotateRight(h);
+        return h;
+    }
+
+    public void deleteMin(){
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+        root = deleteMin(root);
+        if (isEmpty()) root.color = BLACK;
+    }
+
+
+
+    private Node deleteMin(Node h) {
+        if (h.left == null) return null;
+        if(!isRed(h.left) && !isRed(h.left.left))
+            h = moveRedLeft(h);
+        h.left = deleteMin(h.left);
+
+        return balance(h);
+
+    }
+    public void deleteMax(){
+        if (!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+        root = deleteMax(root);
+
+        if (isEmpty()) root.color = BLACK;
+    }
+
+    private Node deleteMax(Node h) {
+
+        if (isRed(h.left))
+            h = rotateRight(h);
+        if (h.right == null)
+            return null;
+        if (!isRed(h.right) && !isRed(h.right.left))
+            h = moveRedRight(h);
+        h.right = deleteMax(h.right);
+        return balance(h);
+
+    }
+
+
+
+    private Node balance(Node h) {
+        if (isRed(h.right)) h = rotateLeft(h);
+
+        //probably unnecessary method
+        if (isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
+
+        if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
+        if (isRed(h.left) && isRed(h.right)) flipColors(h);
+
+        h.N = size(h.left) + size(h.right) + 1;
+
+        return h;
+    }
+
+
+
+    private boolean isEmpty() {
+        return size() == 0;
+    }
     public Key min() {
         return min(root).key;
     }
@@ -209,33 +284,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         else
             return 1 + size(x.left) + rank(key, x.right);
     }
-/*
-    public void deleteMin() {
-        //TODO
-    }
 
-    private Node deleteMin(Node x) {
-        //TODO
-    }
-
-    public void deleteMax() {
-        //TODO
-    }
-
-    private Node deleteMax(Node x) {
-        //TODO;
-
-    }
-
-    public void delete(Key key) {
-        //TODO;
-    }
-
-    private Node delete(Node x, Key key) {
-        //TODO;
-    }
-
- */
 
     public Iterable<Key> keys() {
         return keys(min(), max());
