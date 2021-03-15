@@ -11,7 +11,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     private Node root;
     private Node latest;
     private class Node {
-        private final Key key;
+        private  Key key;
         private Value val;
         private Node left, right;
         private boolean color;
@@ -171,15 +171,43 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         return balance(h);
 
     }
+    public void delete (Key key){
+        if(!isRed(root.left) && !isRed(root.right))
+            root.color = RED;
+        root = delete(root,key);
+        if (!isEmpty()) root.color = BLACK;
+    }
 
+    private Node delete(Node h, Key key) {
+        //key mniejszy niz klucz  z h.key
+        if (key.compareTo(h.key) < 0){
+            if (!isRed(h.left) && !isRed(h.right))
+                h = moveRedLeft(h);
+            h.left = delete(h.left,key);
+        }
+        else{
+            if(isRed(h.left))
+                h = rotateRight(h);
+            if (key.compareTo(h.key) == 0 && (h.right == null))
+                return null;
+            if (!isRed(h.right) && !isRed(h.right.left))
+                h = moveRedRight(h);
+            if (key.compareTo(h.key) == 0){
+                h.val = get(h.right,min(h.right).key);
+                h.key = min(h.right).key;
+                h.right = deleteMin(h.right);
+            }
+            else h.right = delete(h.right,key);
+        }
+        return balance(h);
+    }
 
 
     private Node balance(Node h) {
         if (isRed(h.right)) h = rotateLeft(h);
 
-        //probably unnecessary method
-        if (isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
 
+        if (isRed(h.right) && !isRed(h.left)) h = rotateLeft(h);
         if (isRed(h.left) && isRed(h.left.left)) h = rotateRight(h);
         if (isRed(h.left) && isRed(h.right)) flipColors(h);
 

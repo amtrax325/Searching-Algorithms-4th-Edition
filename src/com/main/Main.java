@@ -20,17 +20,15 @@ public class Main {
         RedBlackBST<String,Integer> x = new RedBlackBST<>();
 
 
-                x.put("g",1);
-                x.put("a",2);
-                x.put("f",2);
-                x.put("g",2);
-                x.put("u",2);
-                x.put("u",56);
-                x.put("x",56);
-                x.put("i",56);
-                x.put("po",56);
+           x.put("E",1);
+           x.put("S",1);
+           x.put("U",1);
+           x.put("T",1);
+           x.put("Y",1);
+           x.put("A",1);
+           x.put("Q",1);
 
-
+           x.delete("E");
 
 
     }
